@@ -28,7 +28,8 @@ RUN apt-get install -y \
     nasm \
     libjpeg-dev \
     libpng-dev \
-    libpng16-16
+    libpng16-16 \
+    libxml2-dev
 
 RUN useradd -m docker && echo "docker:docker" | chpasswd && adduser docker sudo
 
@@ -49,30 +50,43 @@ RUN set -x \
     && apt-get install -y \
         python3-pip
 
-RUN pip3 install requests urllib3 pyOpenSSL docopt slackclient jira GitPython acapi psutil
+RUN pip3 install \
+      requests \
+      urllib3 \
+      pyOpenSSL \
+      docopt \
+      slackclient \
+      jira \
+      GitPython \
+      acapi \
+      psutil
 
 # PHP
-RUN LC_ALL=en_US.UTF-8 add-apt-repository ppa:ondrej/php && apt-get update && apt-get install -y php7.4
-RUN apt-get install -y \
-    php7.4-curl \
-    php7.4-gd \
-    php7.4-dev \
-    php7.4-xml \
-    php7.4-bcmath \
-    php7.4-mysql \
-    php7.4-pgsql \
-    php7.4-mbstring \
-    php7.4-zip \
-    php7.4-bz2 \
-    php7.4-sqlite \
-    php7.4-soap \
-    php7.4-json \
-    php7.4-intl \
-    php7.4-imap \
-    php7.4-imagick \
-    php-memcached
-
 ENV PHP_VERSION 7.4
+
+RUN add-apt-repository ppa:ondrej/php \
+  && apt-get update \
+  && apt-get install -y php${PHP_VERSION}
+
+  RUN apt-get install -y \
+      php${PHP_VERSION}-curl \
+      php${PHP_VERSION}-gd \
+      php${PHP_VERSION}-dev \
+      php${PHP_VERSION}-xml \
+      php${PHP_VERSION}-bcmath \
+      php${PHP_VERSION}-mysql \
+      php${PHP_VERSION}-pgsql \
+      php${PHP_VERSION}-mbstring \
+      php${PHP_VERSION}-zip \
+      php${PHP_VERSION}-bz2 \
+      php${PHP_VERSION}-sqlite \
+      php${PHP_VERSION}-soap \
+      php${PHP_VERSION}-json \
+      php${PHP_VERSION}-intl \
+      php${PHP_VERSION}-imap \
+      php${PHP_VERSION}-soap \
+      php${PHP_VERSION}-imagick \
+      php-memcached
 
 # Composer
 RUN curl -sS https://getcomposer.org/installer | php
