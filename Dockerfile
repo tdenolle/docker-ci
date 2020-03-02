@@ -1,7 +1,7 @@
 FROM ubuntu:18.04
 LABEL name="docker-ci"
 
-ENV TZ=UTC
+ENV TZ="Europe/Paris"
 
 RUN export LC_ALL=C.UTF-8
 RUN DEBIAN_FRONTEND=noninteractive
@@ -62,7 +62,7 @@ RUN pip3 install \
       psutil
 
 # PHP
-ENV PHP_VERSION 7.4
+ENV PHP_VERSION 7.3
 
 RUN add-apt-repository ppa:ondrej/php \
   && apt-get update \
