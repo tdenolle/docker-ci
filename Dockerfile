@@ -46,9 +46,17 @@ RUN set -x \
 ENV CHROME_BIN /usr/bin/google-chrome
 
 # Python
+ENV PYTHON_VERSION 3.7
+
+RUN add-apt-repository ppa:deadsnakes/ppa
+
 RUN set -x \
+    && apt-get update \
     && apt-get install -y \
+        python${PYTHON_VERSION} \
         python3-pip
+
+RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python${PYTHON_VERSION} 1
 
 RUN pip3 install \
       requests \
