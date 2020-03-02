@@ -45,34 +45,12 @@ RUN set -x \
 
 ENV CHROME_BIN /usr/bin/google-chrome
 
-# Python
-ENV PYTHON_VERSION 3.7
-
-RUN add-apt-repository ppa:deadsnakes/ppa
-
-RUN set -x \
-    && apt-get update \
-    && apt-get install -y \
-        python${PYTHON_VERSION} \
-        python3-pip
-
-RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python${PYTHON_VERSION} 1
-
-RUN pip3 install \
-      requests \
-      urllib3 \
-      pyOpenSSL \
-      docopt \
-      slackclient \
-      jira \
-      GitPython \
-      acapi \
-      psutil
-
 # PHP
 ENV PHP_VERSION 7.3
 
-RUN add-apt-repository ppa:ondrej/php \
+RUN add-apt-repository ppa:ondrej/php
+
+RUN set -x \
   && apt-get update \
   && apt-get install -y php${PHP_VERSION}
 
@@ -101,6 +79,31 @@ RUN curl -sS https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/local/bin/composer \
     && chmod +x /usr/local/bin/composer \
     && composer self-update --preview
+
+# Python
+ENV PYTHON_VERSION 3.7
+
+RUN add-apt-repository ppa:deadsnakes/ppa
+
+RUN set -x \
+    && apt-get update \
+    && apt-get install -y \
+        python${PYTHON_VERSION} \
+        libpython${PYTHON_VERSION}-dev \
+        python3-pip
+
+RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python${PYTHON_VERSION} 1
+
+RUN pip3 install \
+      requests \
+      urllib3 \
+      pyOpenSSL \
+      docopt \
+      slackclient \
+      jira \
+      GitPython \
+      acapi \
+      psutil
 
 # Node
 RUN curl -sL https://deb.nodesource.com/setup_13.x | bash -
