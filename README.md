@@ -4,3 +4,4 @@ Chrome
 Node
 Python
 PHP
+Lighthouse
