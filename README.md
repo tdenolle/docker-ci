@@ -1,1 +1,6 @@
-# docker-chrome-node-python
+# docker-ci
+
+Chrome
+Node
+Python
+PHP
